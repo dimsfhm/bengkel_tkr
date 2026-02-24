@@ -12,10 +12,11 @@ class User extends Authenticatable
     protected $table = 'user'; // PENTING
 
     protected $fillable = [
-        'nama_lengkap',
-        'username',
+        'name',
+        'email',
         'password',
-        'role'
+        'role',
+        'alamat'
     ];
 
     protected $hidden = [

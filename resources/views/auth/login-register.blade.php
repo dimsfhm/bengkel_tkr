@@ -118,8 +118,6 @@
                 <input type="password" name="password" placeholder="Masukkan Password">
             </div>
     
-            <a href="#" class="link">Lupa password?</a>
-    
             <button class="btn">Login</button>
     
             <div class="switch">

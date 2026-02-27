@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardPeminjamController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -10,6 +11,13 @@ Route::post('/register', [AuthController::class, 'registerProses'])->name("regis
 
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::get('/admin', fn() => 'Dashboard Admin')->middleware('auth');
-Route::get('/petugas', fn() => 'Dashboard Petugas')->middleware('auth');
-Route::get('/peminjam', fn() => 'Dashboard Peminjam')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', fn() => 'Dashboard Admin');
+    Route::get('/petugas', fn() => 'Dashboard Petugas');
+
+    Route::prefix('peminjam')->name('peminjam.')->group(function () {
+        Route::get('/', [DashboardPeminjamController::class, 'index'])->name('dashboard');
+        Route::get('/data-pesanan', [DashboardPeminjamController::class, 'index'])->name('data-pesanan');
+        
+    });
+});

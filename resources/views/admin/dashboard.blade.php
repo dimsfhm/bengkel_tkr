@@ -22,7 +22,7 @@
                 <div class="card stat-card shadow-sm border-left-success">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-success">Alat tersedia</small>
+                            <small class="text-success">Tambah Alat</small>
                             <h4 class="mb-0 fw-bold">0 Tersedia</h4>
                         </div>
                         <i class="bi bi-briefcase fs-2 text-secondary"></i>

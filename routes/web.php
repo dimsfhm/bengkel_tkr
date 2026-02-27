@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardPeminjamController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,7 @@ Route::post('/register', [AuthController::class, 'registerProses'])->name("regis
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', fn() => 'Dashboard Admin');
+    Route::get('/admin', [DashboardAdminController::class, 'index'])->name('dashboard');
     Route::get('/petugas', fn() => 'Dashboard Petugas');
 
     Route::prefix('peminjam')->name('peminjam.')->group(function () {

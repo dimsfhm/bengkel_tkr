@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DashboardPeminjamController extends Controller
+class DashboardAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +13,7 @@ class DashboardPeminjamController extends Controller
      */
     public function index()
     {
+        return view('admin.dashboard');
     }
 
     /**

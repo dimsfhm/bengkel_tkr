@@ -65,7 +65,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="bi bi-briefcase me-2"></i> Alat Tersedia
+                        <i class="bi bi-briefcase me-2"></i> Tambah Alat
                     </a>
                 </li>
             </ul>
@@ -123,8 +123,8 @@
                         <div class="card stat-card shadow-sm border-left-success">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <div>
-                                    <small class="text-success">Alat tersedia</small>
-                                    <h4 class="mb-0 fw-bold">0 Tersedia</h4>
+                                    <small class="text-success">Tambah alat</small>
+                                    <h4 class="mb-0 fw-bold">0 Alat</h4>
                                 </div>
                                 <i class="bi bi-briefcase fs-2 text-secondary"></i>
                             </div>
@@ -135,8 +135,8 @@
                         <div class="card stat-card shadow-sm border-left-danger">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <div>
-                                    <small class="text-danger">Data Petugas</small>
-                                    <h4 class="mb-0 fw-bold">0 Petugas</h4>
+                                    <small class="text-danger">Data User</small>
+                                    <h4 class="mb-0 fw-bold">0 User</h4>
                                 </div>
                                 <i class="bi bi-people fs-2 text-secondary"></i>
                             </div>

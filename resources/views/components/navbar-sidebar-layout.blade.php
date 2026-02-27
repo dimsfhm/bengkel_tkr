@@ -65,7 +65,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="bi bi-briefcase me-2"></i> Alat Tersedia
+                        <i class="bi bi-briefcase me-2"></i> Tambah Alat
                     </a>
                 </li>
             </ul>

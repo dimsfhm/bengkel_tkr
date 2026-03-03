@@ -22,11 +22,6 @@ class DashboardAdminController extends Controller
         return view('admin.dashboard', compact(['peminjaman', 'total_alat', 'total_petugas']));
     }
 
-    public function indexx()
-    {
-        return view('admin.data-pesanan');
-    }
-
     /**
      * Show the form for creating a new resource.
      *

@@ -1,4 +1,4 @@
-</x-navbar-sidebar-layout>
+<x-navbar-sidebar-layout>
 <div class="container mt-4">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -31,7 +31,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
 
-      <form action="{{ route('alat.store') }}" method="POST">
+      <form action='' method="POST">
         @csrf
 
         <div class="modal-body">

@@ -13,8 +13,12 @@ Route::post('/register', [AuthController::class, 'registerProses'])->name("regis
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', [DashboardAdminController::class, 'index'])->name('dashboard');
-    Route::get('/petugas', fn() => 'Dashboard Petugas');
+    Route::prefix('admin')->name('admin.')->group(function (){
+        Route::get('/', [DashboardAdminController::class, 'index'])->name('dashboard');
+        Route::get("/data-pesanan",[DashboardAdminController::class, 'indexx'])->name("data-pesanan");
+        Route::get("/alat-tersedia",[DashboardAdminController::class, 'indexx'])->name("alat-tersedia");
+    });
+    
 
     Route::prefix('peminjam')->name('peminjam.')->group(function () {
         Route::get('/', [DashboardPeminjamController::class, 'index'])->name('dashboard');

@@ -11,7 +11,7 @@
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
                             <small class="text-primary">Data Pesanan</small>
-                            <h4 class="mb-0 fw-bold">0 Pesanan</h4>
+                            <h4 class="mb-0 fw-bold">{{ $peminjaman->count() }} Pesanan</h4>
                         </div>
                         <i class="bi bi-receipt fs-2 text-secondary"></i>
                     </div>
@@ -23,7 +23,7 @@
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
                             <small class="text-success">Tambah Alat</small>
-                            <h4 class="mb-0 fw-bold">0 Tersedia</h4>
+                            <h4 class="mb-0 fw-bold">{{ $total_alat }} Alat</h4>
                         </div>
                         <i class="bi bi-briefcase fs-2 text-secondary"></i>
                     </div>
@@ -35,7 +35,7 @@
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
                             <small class="text-danger">Data Petugas</small>
-                            <h4 class="mb-0 fw-bold">0 Petugas</h4>
+                            <h4 class="mb-0 fw-bold">{{ $total_petugas }} Petugas</h4>
                         </div>
                         <i class="bi bi-people fs-2 text-secondary"></i>
                     </div>

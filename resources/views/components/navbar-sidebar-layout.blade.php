@@ -46,6 +46,10 @@
 
     <div class="d-flex">
 
+        @php
+            $route_name = auth()->user()->role === 'admin' ? 'admin.' : 'peminjam.';
+        @endphp
+        
         <!-- Sidebar -->
         <div class="sidebar d-none d-md-block px-2">
             <div class="p-3 text-white fs-4 fw-bold border-bottom">
@@ -53,21 +57,9 @@
             </div>
 
             <ul class="nav flex-column mt-3">
-                <li class="nav-item">
-                    <a href="{{ route('peminjam.dashboard') }}" class="nav-link {{ request()->routeIs('peminjam.dashboard') ? 'text-white fw-semibold border-bottom' : 'text-body-tertiary' }}">
-                        <i class="bi bi-house me-2"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('peminjam.data-pesanan') }}" class="nav-link {{ request()->routeIs('peminjam.data-pemesanan') ? 'text-white fw-semibold border-bottom' : 'text-body-tertiary' }}">
-                        <i class="bi bi-receipt me-2"></i> Data Pesanan
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-briefcase me-2"></i> Tambah Alat
-                    </a>
-                </li>
+                <x-navlink href="{{ $route_name. 'dashboard' }}">Dashboard</x-navlink>
+                <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
+                <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat Tersedia</x-navlink>
             </ul>
         </div>
 
@@ -100,7 +92,9 @@
             </nav>
 
             <!-- Main -->
-            {{ $slot }}
+            <main class="p-5">
+                {{ $slot }}
+            </main>
         </div>
     </div>
 

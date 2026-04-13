@@ -1,22 +1,11 @@
 <x-navbar-sidebar-layout>
 <div class="container mt-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-3 border-secondary">
         <h4>Alat Tersedia</h4>
-
-        <!-- Tombol Tambah -->
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahAlat">
             + Tambah Alat
         </button>
-    </div>
-
-    <!-- Card Produk -->
-    <div class="card" style="width: 18rem;">
-        <img src="https://via.placeholder.com/200" class="card-img-top">
-        <div class="card-body">
-            <h6 class="card-title">Mesin Bor Impact</h6>
-            <p class="text-success">Rp. 100.000</p>
-        </div>
     </div>
 
 </div>
@@ -44,11 +33,6 @@
             <div class="mb-3">
                 <label class="form-label">Harga</label>
                 <input type="number" name="harga" class="form-control">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Kondisi</label>
-                <input type="text" name="kondisi" class="form-control">
             </div>
 
             <div class="mb-3">

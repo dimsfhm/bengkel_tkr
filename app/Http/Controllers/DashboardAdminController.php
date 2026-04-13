@@ -6,6 +6,7 @@ use App\Models\alat;
 use App\Models\peminjaman;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardAdminController extends Controller
 {
@@ -29,9 +30,8 @@ class DashboardAdminController extends Controller
      */
     public function create()
     {
-        //
+       
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,8 +40,9 @@ class DashboardAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
+    
 
     /**
      * Display the specified resource.

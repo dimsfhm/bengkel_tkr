@@ -1,8 +1,8 @@
 <x-navbar-sidebar-layout>
     <div class="container-fluid p-4">
-
-        <h3 class="mb-4">Dashboard</h3>
-
+        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2 border-secondary">
+            <h3 class="mb-4">Dashboard</h3>
+        </div>
         <!-- Stats -->
         <div class="row g-3 mb-4">
 
@@ -60,62 +60,6 @@
                                 <th>Kode Pesanan</th>
                                 <th>Harga</th>
                             </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/50" class="me-2 rounded">
-                                        Kunci Inggris
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-active">Active</span></td>
-                                <td>Standart</td>
-                                <td><span class="badge bg-light text-dark border">9177</span></td>
-                                <td>Rp. 100.000</td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/50" class="me-2 rounded">
-                                        Kunci Inggris
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-active">Active</span></td>
-                                <td>Standart</td>
-                                <td><span class="badge bg-light text-dark border">9177</span></td>
-                                <td>Rp. 100.000</td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/50" class="me-2 rounded">
-                                        Kunci Inggris
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-active">Active</span></td>
-                                <td>Standart</td>
-                                <td><span class="badge bg-light text-dark border">9177</span></td>
-                                <td>Rp. 100.000</td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/50" class="me-2 rounded">
-                                        Kunci Inggris
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-active">Active</span></td>
-                                <td>Standart</td>
-                                <td><span class="badge bg-light text-dark border">9177</span></td>
-                                <td>Rp. 100.000</td>
-                            </tr>
-
-                        </tbody>
                     </table>
                 </div>
 

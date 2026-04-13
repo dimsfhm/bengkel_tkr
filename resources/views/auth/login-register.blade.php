@@ -119,10 +119,7 @@
             </div>
     
             <button class="btn">Login</button>
-    
-            <div class="switch">
-                Belum punya akun? <a href="#" class="link" onclick="showRegister()">Daftar sekarang</a>
-            </div>
+
         </form>
     
         {{-- REGISTER --}}
@@ -149,10 +146,6 @@
             </div>
     
             <button class="btn">Register</button>
-    
-            <div class="switch">
-                Sudah punya akun? <a href="#" class="link" onclick="showLogin()">Login</a>
-            </div>
         </form>
     </div>
     

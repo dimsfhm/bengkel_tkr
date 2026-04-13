@@ -52,7 +52,7 @@
         
         <!-- Sidebar -->
         <div class="sidebar d-none d-md-block px-2">
-            <div class="p-3 text-white fs-4 fw-bold border-bottom">
+            <div class="p-3 text-white fs-8 fw-bold border-bottom">
                 <i class="bi bi-tools"></i> MasterAlat
             </div>
 
@@ -60,6 +60,7 @@
                 <x-navlink href="{{ $route_name. 'dashboard' }}">Dashboard</x-navlink>
                 <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
                 <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat Tersedia</x-navlink>
+                <x-navlink href="{{ $route_name. 'data-user' }}">Data User</x-navlink>
             </ul>
         </div>
 

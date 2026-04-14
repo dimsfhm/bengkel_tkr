@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\alat;
+use App\Models\peminjaman;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardPeminjamController extends Controller
@@ -13,6 +16,10 @@ class DashboardPeminjamController extends Controller
      */
     public function index()
     {
+        $peminjaman = peminjaman::get();
+        $total_alat = alat::count();
+        $total_petugas = User::where('role', 'petugas')->count();
+        return view('peminjam.dashboard', compact('peminjaman', 'total_alat', 'total_petugas'));
     }
 
     /**

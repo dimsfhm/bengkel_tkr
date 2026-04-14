@@ -47,7 +47,7 @@
     <div class="d-flex">
 
         @php
-            $route_name = auth()->user()->role === 'admin' ? 'admin.' : 'peminjam.';
+            $route_name = auth()->user()->role === 'admin' ? 'admin.' : (auth()->user()->role === 'petugas' ? 'petugas.' : 'peminjam.');
         @endphp
         
         <!-- Sidebar -->
@@ -57,10 +57,36 @@
             </div>
 
             <ul class="nav flex-column mt-3">
+                {{--muncul semua  --}}
                 <x-navlink href="{{ $route_name. 'dashboard' }}">Dashboard</x-navlink>
-                <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
-                <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat Tersedia</x-navlink>
-                <x-navlink href="{{ $route_name. 'data-user' }}">Data User</x-navlink>
+                <x-navlink href="{{ $route_name. 'riwayat' }}">Riwayat</x-navlink>
+                <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat</x-navlink>
+                {{--  --}}
+                
+                
+                
+                {{-- admin aja --}}
+                @if (auth()->user()->role === 'admin')
+                    <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
+                    <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat Tersedia</x-navlink>
+                    <x-navlink href="{{ $route_name. 'data-user' }}">Data User</x-navlink>
+                    <x-navlink href="{{ $route_name. 'kategori.index' }}">add kategori</x-navlink>
+                    
+                @endif
+                    
+                {{-- petugas aja --}}
+                @if (auth()->user()->role === 'petugas')
+                    <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
+                
+                @endif
+
+
+                {{-- peminjam aja --}}
+                @if (auth()->user()->role === 'peminjam')
+                    <x-navlink href="{{ $route_name. 'dashboard' }}">Dashboard</x-navlink>
+                    <x-navlink href="{{ $route_name. 'riwayat' }}">Riwayat</x-navlink>
+                @endif
+
             </ul>
         </div>
 

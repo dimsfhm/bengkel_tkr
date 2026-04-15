@@ -68,7 +68,6 @@
                 {{-- admin aja --}}
                 @if (auth()->user()->role === 'admin')
                     <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
-                    <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat Tersedia</x-navlink>
                     <x-navlink href="{{ $route_name. 'data-user' }}">Data User</x-navlink>
                     <x-navlink href="{{ $route_name. 'kategori.index' }}">add kategori</x-navlink>
                     
@@ -96,7 +95,7 @@
             <!-- Topbar -->
             <nav class="navbar navbar-light bg-white shadow-sm px-3">
                 <div class="container-fluid">
-                    <i class="bi bi-cart2 fs-3"></i>
+                    <i class="bi bi-cart2 fs-3 {{ auth()->user()->role === 'user' ? 'opacity-100' : 'opacity-0' }}"></i>
                     
                     <form class="d-flex gap-3">
                         <div class="rounded-pill ps-3 bg-body-secondary d-flex align-items-center">
@@ -113,6 +112,10 @@
                         <div class="d-flex align-items-center">
                             <i class="bi bi-person-circle fs-4 me-2"></i>
                             <span>Admin</span>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm ms-3">Logout</button>
+                            </form>
                         </div>
                     </div>
                 </div>

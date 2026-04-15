@@ -59,8 +59,6 @@
             <ul class="nav flex-column mt-3">
                 {{--muncul semua  --}}
                 <x-navlink href="{{ $route_name. 'dashboard' }}">Dashboard</x-navlink>
-                <x-navlink href="{{ $route_name. 'riwayat' }}">Riwayat</x-navlink>
-                <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat</x-navlink>
                 {{--  --}}
                 
                 
@@ -82,9 +80,10 @@
 
 
                 {{-- peminjam aja --}}
-                @if (auth()->user()->role === 'peminjam')
-                    <x-navlink href="{{ $route_name. 'dashboard' }}">Dashboard</x-navlink>
+                @if (auth()->user()->role === 'user')
                     <x-navlink href="{{ $route_name. 'riwayat' }}">Riwayat</x-navlink>
+                    <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat</x-navlink>
+                    <x-navlink href="{{ $route_name. 'cart' }}">Keranjang</x-navlink>
                 @endif
 
             </ul>
@@ -96,7 +95,7 @@
             <!-- Topbar -->
             <nav class="navbar navbar-light bg-white shadow-sm px-3">
                 <div class="container-fluid">
-                    <i class="bi bi-cart2 fs-3"></i>
+                    <i class="bi  fs-3"></i>
                     
                     <form class="d-flex gap-3">
                         <div class="rounded-pill ps-3 bg-body-secondary d-flex align-items-center">
@@ -111,8 +110,7 @@
 
                     <div class="d-flex align-items-center gap-3">
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-person-circle fs-4 me-2"></i>
-                            <span>Admin</span>
+
                         </div>
                     </div>
                 </div>

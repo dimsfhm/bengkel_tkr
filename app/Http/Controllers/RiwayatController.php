@@ -3,24 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Peminjaman;
 
 class RiwayatController extends Controller
 {
     public function index()
     {
-        $riwayats = [
-            (object)[
-                'id' => 1,
-                'nama_produk' => 'Kunci Inggris',
-                'status' => 'Done',
-                'tipe' => 'Standart',
-                'kode' => '9177',
-                'harga' => 100000
-            ],
-            // tambahkan data lain kalau mau
-        ];
-
-        return view('peminjam.riwayat', compact('riwayats'));
+        $peminjaman = Peminjaman::with('details.alat')->paginate(10);
+        return view('peminjam.riwayat', compact('peminjaman'));
     }
 
     public function destroy($id)

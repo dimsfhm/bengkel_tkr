@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('kategori_id')->constrained('kategori');
             $table->string('nama_alat');
             $table->integer('jumlah_total');
-            $table->integer('kondisi_baik');
-            $table->integer('kondisi_rusak');
+            $table->decimal('harga', 10, 2)->nullable(); // tambah ()
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alats');
+        Schema::dropIfExists('alat');
     }
 };

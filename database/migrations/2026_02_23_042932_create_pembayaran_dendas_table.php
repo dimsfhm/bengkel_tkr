@@ -13,15 +13,29 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pembayaran_denda', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('denda_id')->constrained('denda');
-            $table->foreignId('petugas_id')->constrained('user');
-            $table->date('tanggal_bayar');
-            $table->decimal('jumlah_bayar',10,2);
-            $table->enum('status_bayar',['lunas','belum']);
-            $table->timestamps();
-        });
+        Schema::create('pembayaran', function (Blueprint $table) {
+    $table->id();
+
+    $table->foreignId('peminjaman_id')
+        ->constrained('peminjaman')
+        ->cascadeOnDelete();
+
+    $table->enum('metode', ['cash', 'gateway']);
+
+    $table->decimal('jumlah', 12, 2);
+
+    $table->enum('status', [
+        'pending',
+        'success',
+        'failed'
+    ])->default('pending');
+
+    $table->string('reference_id')->nullable(); // gateway (midtrans/xendit)
+
+    $table->timestamp('paid_at')->nullable();
+
+    $table->timestamps();
+});
     }
 
     /**
@@ -31,6 +45,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pembayaran_dendas');
+        Schema::dropIfExists('pembayaran');
     }
 };

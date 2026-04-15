@@ -1,7 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
+<x-navbar-sidebar-layout>
+    <div class="container">
     <h1>Manajemen Kategori</h1>
 
     {{-- Notifikasi sukses/error --}}
@@ -69,4 +67,4 @@
         </div>
     </div>
 </div>
-@endsection
+</x-navbar-sidebar-layout>

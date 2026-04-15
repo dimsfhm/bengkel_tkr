@@ -10,7 +10,7 @@ class alat extends Model
     use HasFactory;
 
     protected $table = 'alat';
-    protected $fillable = ['kategori_id', 'nama_alat', 'jumlah_total', 'kondisi_baik', 'kondisi_rusak'];
+    protected $fillable = ['kategori_id', 'nama_alat', 'jumlah_total', 'harga', 'gambar'];
 
     public function kategori()
 {   

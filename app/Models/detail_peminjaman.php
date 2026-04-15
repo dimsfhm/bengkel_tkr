@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class detail_peminjaman extends Model
 {
-    use HasFactory;
+    protected $table = 'detail_peminjaman';
+    protected $fillable = ['peminjaman_id', 'alat_id', 'jumlah_pinjam', 'kondisi_kembali'];
 
     public function peminjaman()
-    {
-        return $this->belongsTo(peminjaman::class, 'peminjaman_id', 'id');
-    }
+{
+    return $this->belongsTo(Peminjaman::class);
+}
 
-    public function alat()
-    {
-        return $this->belongsTo(alat::class, 'alat_id', 'id');
-    }
+public function alat()
+{
+    return $this->belongsTo(Alat::class);
+}
 }

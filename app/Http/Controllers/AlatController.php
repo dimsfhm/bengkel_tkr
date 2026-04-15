@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alat;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AlatController extends Controller
 {
@@ -27,32 +28,31 @@ class AlatController extends Controller
             'kategori_id'   => 'required|exists:kategori,id',
             'nama_alat'     => 'required|string|max:255|unique:alat,nama_alat',
             'jumlah_total'  => 'required|integer|min:0',
-            'kondisi_baik'  => 'required|integer|min:0',
-            'kondisi_rusak' => 'required|integer|min:0',
+            'harga'         => 'required|numeric|min:0',
+            'gambar'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        // Opsional: pastikan kondisi_baik + kondisi_rusak <= jumlah_total
-        if ($request->kondisi_baik + $request->kondisi_rusak > $request->jumlah_total) {
-            return back()->withErrors([
-                'jumlah_total' => 'Jumlah total harus lebih besar atau sama dengan jumlah kondisi baik + rusak.'
-            ])->withInput();
+        $data = $request->only(['kategori_id', 'nama_alat', 'jumlah_total', 'harga']);
+
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('alat', 'public');
+            $data['gambar'] = $path;
         }
 
-        Alat::create($request->only([
-            'kategori_id', 'nama_alat', 'jumlah_total', 'kondisi_baik', 'kondisi_rusak'
-        ]));
+        Alat::create($data);
 
         return redirect()->route('admin.alat-tersedia')
                          ->with('success', 'Alat berhasil ditambahkan!');
     }
 
     /**
-     * Menampilkan form edit alat
+     * Menampilkan form edit alat (jika menggunakan view terpisah)
+     * Bisa dihapus jika menggunakan modal
      */
     public function edit($id)
     {
         $alat = Alat::findOrFail($id);
-        $kategoris = Kategori::all(); // untuk dropdown pilihan kategori
+        $kategoris = Kategori::all();
         return view('admin.alat-edit', compact('alat', 'kategoris'));
     }
 
@@ -67,20 +67,22 @@ class AlatController extends Controller
             'kategori_id'   => 'required|exists:kategori,id',
             'nama_alat'     => 'required|string|max:255|unique:alat,nama_alat,' . $alat->id,
             'jumlah_total'  => 'required|integer|min:0',
-            'kondisi_baik'  => 'required|integer|min:0',
-            'kondisi_rusak' => 'required|integer|min:0',
+            'harga'         => 'required|numeric|min:0',
+            'gambar'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        // Validasi jumlah
-        if ($request->kondisi_baik + $request->kondisi_rusak > $request->jumlah_total) {
-            return back()->withErrors([
-                'jumlah_total' => 'Jumlah total harus lebih besar atau sama dengan jumlah kondisi baik + rusak.'
-            ])->withInput();
+        $data = $request->only(['kategori_id', 'nama_alat', 'jumlah_total', 'harga']);
+
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($alat->gambar && Storage::exists('public/' . $alat->gambar)) {
+                Storage::delete('public/' . $alat->gambar);
+            }
+            $path = $request->file('gambar')->store('alat', 'public');
+            $data['gambar'] = $path;
         }
 
-        $alat->update($request->only([
-            'kategori_id', 'nama_alat', 'jumlah_total', 'kondisi_baik', 'kondisi_rusak'
-        ]));
+        $alat->update($data);
 
         return redirect()->route('admin.alat-tersedia')
                          ->with('success', 'Alat berhasil diperbarui!');
@@ -92,18 +94,26 @@ class AlatController extends Controller
     public function destroy($id)
     {
         $alat = Alat::findOrFail($id);
+        // Hapus file gambar jika ada
+        if ($alat->gambar && Storage::exists('public/' . $alat->gambar)) {
+            Storage::delete('public/' . $alat->gambar);
+        }
         $alat->delete();
 
         return redirect()->route('admin.alat-tersedia')
                          ->with('success', 'Alat berhasil dihapus!');
     }
 
-public function alatTersedia()
-{
-    $alats = \App\Models\Alat::with('kategori')
-                ->where('kondisi_baik', '>', 0)
-                ->latest()
-                ->paginate(8);
-    return view('peminjam.alat-tersedia', compact('alats'));
-}
+    /**
+     * Halaman alat tersedia untuk peminjam
+     * (menampilkan alat yang memiliki stok > 0)
+     */
+    public function alatTersedia()
+    {
+        $alats = Alat::with('kategori')
+                    ->where('jumlah_total', '>', 0)  // atau sesuai logika stok tersedia
+                    ->latest()
+                    ->paginate(8);
+        return view('peminjam.alat-tersedia', compact('alats'));
+    }
 }

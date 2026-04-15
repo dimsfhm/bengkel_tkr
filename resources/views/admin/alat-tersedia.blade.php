@@ -29,8 +29,8 @@
                 <th>Nama Alat</th>
                 <th>Kategori</th>
                 <th>Jumlah Total</th>
-                <th>Kondisi Baik</th>
-                <th>Kondisi Rusak</th>
+                <th>Harga</th>
+                <th>Gambar</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -41,8 +41,8 @@
                 <td>{{ $item->nama_alat }}</td>
                 <td>{{ $item->kategori->nama_kategori ?? '-' }}</td>
                 <td>{{ $item->jumlah_total }}</td>
-                <td>{{ $item->kondisi_baik }}</td>
-                <td>{{ $item->kondisi_rusak }}</td>
+                <td>{{ $item->harga }}</td>
+                <td>{{ $item->gambar }}</td>
                 <td>
                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditAlat{{ $item->id }}">Edit</button>
                     <form action="{{ route('admin.alat.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
@@ -68,7 +68,7 @@
         <h5 class="modal-title">Tambah Alat Baru</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
-      <form action="{{ route('admin.alat.store') }}" method="POST">
+      <form action="{{ route('admin.alat.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-body">
             <div class="mb-3">
@@ -89,12 +89,12 @@
                 <input type="number" name="jumlah_total" class="form-control" required min="0">
             </div>
             <div class="mb-3">
-                <label class="form-label">Kondisi Baik</label>
-                <input type="number" name="kondisi_baik" class="form-control" required min="0">
+                <label class="form-label">Harga (Rp)</label>
+                <input type="number" name="harga" class="form-control" required min="0">
             </div>
             <div class="mb-3">
-                <label class="form-label">Kondisi Rusak</label>
-                <input type="number" name="kondisi_rusak" class="form-control" required min="0">
+                <label class="form-label">Gambar Alat</label>
+                <input type="file" name="gambar" class="form-control" accept="image/*">
             </div>
         </div>
         <div class="modal-footer">
@@ -115,7 +115,7 @@
         <h5 class="modal-title">Edit Alat</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <form action="{{ route('admin.alat.update', $item->id) }}" method="POST">
+      <form action="{{ route('admin.alat.update', $item->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="modal-body">
@@ -136,12 +136,15 @@
                 <input type="number" name="jumlah_total" class="form-control" value="{{ $item->jumlah_total }}" required min="0">
             </div>
             <div class="mb-3">
-                <label>Kondisi Baik</label>
-                <input type="number" name="kondisi_baik" class="form-control" value="{{ $item->kondisi_baik }}" required min="0">
+                <label>Harga (Rp)</label>
+                <input type="number" name="harga" class="form-control" value="{{ $item->harga ?? '' }}" required min="0">
             </div>
             <div class="mb-3">
-                <label>Kondisi Rusak</label>
-                <input type="number" name="kondisi_rusak" class="form-control" value="{{ $item->kondisi_rusak }}" required min="0">
+                <label>Gambar Alat</label>
+                <input type="file" name="gambar" class="form-control" accept="image/*">
+                @if($item->gambar)
+                    <small class="text-muted">Gambar saat ini: <a href="{{ asset('storage/' . $item->gambar) }}" target="_blank">Lihat</a></small>
+                @endif
             </div>
         </div>
         <div class="modal-footer">

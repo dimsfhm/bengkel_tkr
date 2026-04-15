@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('denda', function (Blueprint $table) {
+        Schema::create('peminjam_controllers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('peminjaman_id')->constrained('peminjaman')->cascadeOnDelete();
-            $table->integer('hari_terlambat');
-            $table->decimal('jumlah_denda', 12, 2);
-            $table->enum('status', ['unpaid','paid'])->default('unpaid');
             $table->timestamps();
-    });
+        });
     }
 
     /**
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dendas');
+        Schema::dropIfExists('peminjam_controllers');
     }
 };

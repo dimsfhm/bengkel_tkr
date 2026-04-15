@@ -15,14 +15,14 @@ class DashboardAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
-        $peminjaman = peminjaman::with('detail_peminjaman.alat')->get();
+        $peminjaman = peminjaman::get(); // Consider using pagination or with() for eager loading
         $total_alat = alat::count();
-        $total_petugas = User::where('role', 'petugas')->count();
-        return view('admin.dashboard', compact(['peminjaman', 'total_alat', 'total_petugas']));
+        $total_petugas = User::where('role', 'petugas')->count(); // or 'admin' if you prefer
+        
+        return view('admin.dashboard', compact('peminjaman', 'total_alat', 'total_petugas'));
     }
-
     /**
      * Show the form for creating a new resource.
      *

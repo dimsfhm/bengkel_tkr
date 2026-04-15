@@ -57,6 +57,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/admin/peminjaman/{id}/approve', [AdminPeminjamanController::class, 'approve']);
     Route::post('/admin/peminjaman/{id}/reject', [AdminPeminjamanController::class, 'reject']);
 
+    // Riwayat
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
 });
 
 // GROUP PEMINJAM

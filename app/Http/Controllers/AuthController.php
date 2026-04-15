@@ -27,11 +27,11 @@ class AuthController extends Controller
             $role = Auth::user()->role;
 
             if ($role == 'admin') {
-                return redirect('/admin')->with('success', 'Login Berhasil!');
+                return redirect('/admin/dashboard')->with('success', 'Login Berhasil!');
             } elseif ($role == 'petugas') {
                 return redirect('/petugas')->with('success', 'Login Berhasil!');
             } else {
-                return redirect('/peminjam')->with('success', 'Login Berhasil!');
+                return redirect('/peminjam/dashboard')->with('success', 'Login Berhasil!');
             }
         }
 
@@ -72,6 +72,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('login')->with('success', 'Logout Berhasil!');
     }
 }

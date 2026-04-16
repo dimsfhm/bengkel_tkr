@@ -26,13 +26,13 @@ class AlatController extends Controller
     {
         $request->validate([
             'kategori_id'   => 'required|exists:kategori,id',
-            'nama_alat'     => 'required|string|max:255|unique:alat,nama_alat',
+            'nama_alat' => 'required|string|max:255|unique:alats,nama_alat',
             'jumlah_total'  => 'required|integer|min:0',
             'harga'         => 'required|numeric|min:0',
             'gambar'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $data = $request->only(['kategori_id', 'nama_alat', 'jumlah_total', 'harga']);
+        $data = $request->only(['kategori_id', 'nama_alat', 'jumlah_total', 'harga','gambar']);
 
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('alat', 'public');
@@ -65,7 +65,7 @@ class AlatController extends Controller
 
         $request->validate([
             'kategori_id'   => 'required|exists:kategori,id',
-            'nama_alat'     => 'required|string|max:255|unique:alat,nama_alat,' . $alat->id,
+            'nama_alat'     => 'required|string|max:255|unique:alats,nama_alat,' . $alat->id,
             'jumlah_total'  => 'required|integer|min:0',
             'harga'         => 'required|numeric|min:0',
             'gambar'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048'

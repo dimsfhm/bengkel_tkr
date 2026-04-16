@@ -9,7 +9,7 @@ class alat extends Model
 {
     use HasFactory;
 
-    protected $table = 'alat';
+    protected $table = 'alats';
     protected $fillable = ['kategori_id', 'nama_alat', 'jumlah_total', 'harga', 'gambar'];
 
     public function kategori()
@@ -21,4 +21,9 @@ class alat extends Model
     {
         return $this->hasMany(detail_peminjaman::class, 'alat_id', 'id');
     }
+
+    public function alat()
+{
+    return $this->belongsTo(Alat::class, 'alat_id');
+}
 }

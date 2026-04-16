@@ -2,59 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Models\Peminjaman;
-use App\Models\detail_peminjaman;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Alat;  
+use Carbon\Carbon;
 
 class PeminjamController extends Controller
 {
-        public function checkout()
+    public function checkout(Request $request)
 {
-    $cart = session()->get('cart', []);
-    if (empty($cart)) {
-        return back()->with('error', 'Keranjang kosong');
-    }
-
-    DB::beginTransaction();
-
     try {
 
-        $total = 0;
-
-        foreach ($cart as $item) {
-            $total += $item['harga'] * $item['quantity'];
-        }
-
-        $peminjaman = Peminjaman::create([
-            'user_id' => auth()->id(),
-            'tanggal_pinjam' => now(),
-            'tanggal_jatuh_tempo' => now()->addDays(3), // default
-            'status' => 'pending',
-            'payment_status' => 'unpaid',
-            'total' => $total
+        $request->validate([
+            'alat_id' => 'required|exists:alats,id',
+            'jumlah' => 'required|integer|min:1',
+            'tanggal_pinjam' => 'required|date',
+            'lama_sewa' => 'required|integer|min:1',
         ]);
 
-        foreach ($cart as $id => $item) {
-            $peminjaman->detail()->create([
-                'alat_id' => $id,
-                'qty' => $item['quantity'],
-                'harga' => $item['harga'],
-                'subtotal' => $item['harga'] * $item['quantity']
-            ]);
+        $alat = Alat::findOrFail($request->alat_id);
+
+        if ($request->jumlah > $alat->jumlah_total) {
+            return back()->with('error', 'Stok tidak mencukupi');
         }
 
-        session()->forget('cart');
+        $tanggalPinjam = Carbon::parse($request->tanggal_pinjam);
+        $tanggalJatuhTempo = $tanggalPinjam->copy()->addDays($request->lama_sewa);
 
-        DB::commit();
+        Peminjaman::create([
+            'user_id' => Auth::id(),
+            'alat_id' => $request->alat_id,
+            'jumlah' => $request->jumlah,
+            'tanggal_pinjam' => $tanggalPinjam,
+            'tanggal_jatuh_tempo' => $tanggalJatuhTempo,
+            'status' => 'pending',
+        ]);
 
-        return redirect()->route('peminjam.payment', $peminjaman->id);
+        $alat->decrement('jumlah_total', $request->jumlah);
+
+        return redirect()->route('peminjam.alat-tersedia')
+            ->with('success', 'Permintaan berhasil dikirim ke admin');
 
     } catch (\Exception $e) {
-        DB::rollback();
-        return back()->with('error', $e->getMessage());
+        return back()->with('error', $e->getMessage()); // 🔥 jangan dd lagi
     }
+}
+
+public function ajukanPengembalian($id)
+{
+    $peminjaman = Peminjaman::findOrFail($id);
+
+    if ($peminjaman->status != 'disetujui') {
+        return back()->with('error', 'Belum bisa dikembalikan');
+    }
+
+    $peminjaman->update([
+        'status_pengembalian' => 'belum',
+        'tanggal_kembali' => now() // request waktu ajukan
+    ]);
+
+    return back()->with('success', 'Pengembalian diajukan');
 }
 }

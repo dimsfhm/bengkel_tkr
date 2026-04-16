@@ -36,10 +36,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/alat-tersedia/{id}', [AlatController::class, 'destroy'])->name('alat.destroy');
 
     // Pesanan
-    Route::get('/data-pesanan', [PesananController::class, 'index'])->name('data-pesanan');
+    Route::get('/data-pesanan', [AdminPeminjamanController::class, 'index'])->name('data-pesanan');
 
     // Pesanan
-    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
     
     // User
     Route::get('/data-user', [UserController::class, 'index'])->name('data-user');
@@ -54,11 +53,18 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 
     // Pinjam
-    Route::post('/admin/peminjaman/{id}/approve', [AdminPeminjamanController::class, 'approve']);
-    Route::post('/admin/peminjaman/{id}/reject', [AdminPeminjamanController::class, 'reject']);
+    Route::get('/peminjaman', [AdminPeminjamanController::class, 'index'])->name('peminjaman');
+    Route::post('/peminjaman/{id}/approve', [AdminPeminjamanController::class, 'approve'])->name('peminjaman.approve');
+    Route::post('/peminjaman/{id}/reject', [AdminPeminjamanController::class, 'reject'])->name('peminjaman.reject');
+
+    Route::get('/pengembalian', [AdminPeminjamanController::class, 'pengembalian'])->name('pengembalian');
+    Route::post('/peminjaman/{id}/return-approve', [AdminPeminjamanController::class, 'approveReturn']);
+    Route::post('/peminjaman/{id}/return-reject', [AdminPeminjamanController::class, 'rejectReturn']);
 
     // Riwayat
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
+
+    Route::get('/laporan/peminjaman/pdf', [AdminPeminjamanController::class, 'exportPdf'])->name('laporan.pdf');
 });
 
 // GROUP PEMINJAM
@@ -72,15 +78,18 @@ Route::middleware('auth')->prefix('peminjam')->name('peminjam.')->group(function
     Route::delete('/riwayat/{id}', [RiwayatController::class, 'destroy'])->name('riwayat.hapus');
     
     // Route tambah ke keranjang (nama final: peminjam.cart.add)
-    Route::get('/cart', [CartController::class, 'index'])->name('peminjam.cart');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
-    Route::post('/peminjam/checkout', [PeminjamController::class, 'checkout'])
-    ->name('peminjam.checkout');
+    Route::post('/checkout', [PeminjamController::class, 'checkout'])
+    ->name('checkout');
 
-    Route::get('/payment/{id}', [PaymentController::class, 'payGateway'])->name('peminjam.payment');
-    Route::post('/payment/{id}/pay', [PaymentController::class, 'pay'])->name('peminjam.pay');
+    Route::post('/pengembalian/{id}', [PeminjamController::class, 'ajukanPengembalian'])
+    ->name('pengembalian');
+
+    //Route::get('/payment/{id}', [PaymentController::class, 'payGateway'])->name('peminjam.payment');
+    //Route::post('/payment/{id}/pay', [PaymentController::class, 'pay'])->name('peminjam.pay');
 
     Route::get('/reset-cart', function () {
     session()->forget('cart');

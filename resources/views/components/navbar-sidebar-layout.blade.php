@@ -65,9 +65,12 @@
                 
                 {{-- admin aja --}}
                 @if (auth()->user()->role === 'admin')
+                    <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Data alat</x-navlink>
                     <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
                     <x-navlink href="{{ $route_name. 'data-user' }}">Data User</x-navlink>
                     <x-navlink href="{{ $route_name. 'kategori.index' }}">add kategori</x-navlink>
+                    <x-navlink href="{{ $route_name. 'pengembalian' }}">Pengembalian</x-navlink>
+                    <x-navlink href="{{ $route_name. 'laporan.pdf' }}">Laporan</x-navlink>
                     
                 @endif
                     
@@ -80,7 +83,7 @@
 
                 {{-- peminjam aja --}}
                 @if (auth()->user()->role === 'user')
-                    <x-navlink href="{{ $route_name. 'riwayat' }}">Riwayat</x-navlink>
+                    <x-navlink href="{{ $route_name. 'riwayat' }}">Peminjaman</x-navlink>
                     <x-navlink href="{{ $route_name. 'alat-tersedia' }}">Alat</x-navlink>
                     <x-navlink href="{{ $route_name. 'cart' }}">Keranjang</x-navlink>
                 @endif
@@ -109,8 +112,6 @@
 
                     <div class="d-flex align-items-center gap-3">
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-person-circle fs-4 me-2"></i>
-                            <span>Admin</span>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger btn-sm ms-3">Logout</button>

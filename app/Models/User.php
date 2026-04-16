@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'user'; // PENTING
+    protected $table = 'users'; // PENTING
 
     protected $fillable = [
         'name',

@@ -27,11 +27,11 @@ class AuthController extends Controller
             $role = Auth::user()->role;
 
             if ($role == 'admin') {
-                return redirect('/admin/dashboard')->with('success', 'Login Berhasil!');
+                return redirect('/admin')->with('success', 'Login Berhasil!');
             } elseif ($role == 'petugas') {
                 return redirect('/petugas')->with('success', 'Login Berhasil!');
             } else {
-                return redirect('/peminjam/dashboard')->with('success', 'Login Berhasil!');
+                return redirect('/peminjam')->with('success', 'Login Berhasil!');
             }
         }
 
@@ -49,7 +49,7 @@ class AuthController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:user',
+            'email' => 'required|unique:users',
             'password' => 'required|min:6',
             'password_confirmation' => 'required|min:6|same:password',
             'alamat' => 'required'

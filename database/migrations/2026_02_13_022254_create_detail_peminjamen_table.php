@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('peminjaman_detail', function (Blueprint $table) {
             $table->id();
             $table->foreignId('peminjaman_id')->constrained('peminjaman')->cascadeOnDelete();
-            $table->foreignId('alat_id')->constrained('alat')->cascadeOnDelete();
+            $table->foreignId('alat_id')->constrained('alats')->cascadeOnDelete();
             $table->integer('qty');
             $table->decimal('harga', 12, 2);
             $table->decimal('subtotal', 12, 2);

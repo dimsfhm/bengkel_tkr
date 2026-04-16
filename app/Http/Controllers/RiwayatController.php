@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers; 
 
-use Illuminate\Http\Request;
-use App\Models\Peminjaman;
+    use Illuminate\Http\Request;
+    use App\Models\Peminjaman;
 
-class RiwayatController extends Controller
-{
-    public function index()
+    class RiwayatController extends Controller
     {
-        $peminjaman = Peminjaman::with('details.alat')->paginate(10);
-        return view('peminjam.riwayat', compact('peminjaman'));
-    }
+        public function index()
+        {
+            $peminjaman = Peminjaman::with('alat')->paginate(10);
+            return view('peminjam.riwayat', compact('peminjaman'));
+        }
 
-    public function destroy($id)
-    {
-        // logic hapus data
-        return back()->with('success', 'Data berhasil dihapus');
+        public function destroy($id)
+        {
+            // logic hapus data
+            return back()->with('success', 'Data berhasil dihapus');
+        }
     }
-}

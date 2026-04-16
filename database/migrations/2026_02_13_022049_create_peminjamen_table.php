@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('petugas_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('alat_id')->constrained('alats')->cascadeOnDelete();
+            $table->integer('jumlah');
             $table->date('tanggal_pinjam');
             $table->date('tanggal_jatuh_tempo');
             $table->date('tanggal_kembali')->nullable();

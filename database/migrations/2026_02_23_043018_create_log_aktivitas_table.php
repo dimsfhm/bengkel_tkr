@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('log_aktivitas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('user');
+            $table->foreignId('user_id')->constrained('users');
             $table->enum('role',['admin','petugas','user']);
             $table->text('aktivitas');
             $table->timestamps();

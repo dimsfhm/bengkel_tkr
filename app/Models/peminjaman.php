@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Peminjaman extends Model
 {
     protected $table = 'peminjaman';
-    protected $fillable = ['user_id', 'petugas_id', 'tanggal_pinjam', 'tanggal_jatuh_tempo', 'tanggal_kembali', 'status'];
+    protected $fillable = ['user_id', 'petugas_id', 'alat_id','jumlah', 'tanggal_pinjam', 'tanggal_jatuh_tempo', 'tanggal_kembali', 'status'];
 
     public function user()
     {
@@ -29,4 +29,9 @@ public function denda()
     return $this->hasOne(Denda::class);
 }
 
+public function alat()
+{
+    return $this->belongsTo(\App\Models\Alat::class);
 }
+
+}   

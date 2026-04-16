@@ -18,9 +18,9 @@ class UserController extends Controller
     {
         $request->validate([
             'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:user,email',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role'     => 'required|in:user,petugas,admin', // sesuaikan dengan role yang ada
+            'role'     => 'required|in:users,petugas,admin', // sesuaikan dengan role yang ada
         ]);
 
         User::create([

@@ -59,7 +59,7 @@ public function ajukanPengembalian($id)
     }
 
     $peminjaman->update([
-        'status_pengembalian' => 'belum',
+        'status_pengembalian' => 'diajukan',
         'tanggal_kembali' => now() // request waktu ajukan
     ]);
 

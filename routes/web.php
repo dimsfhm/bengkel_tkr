@@ -12,6 +12,7 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PeminjamController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\Admin\PeminjamanController as AdminPeminjamanController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,8 +59,54 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/peminjaman/{id}/reject', [AdminPeminjamanController::class, 'reject'])->name('peminjaman.reject');
 
     Route::get('/pengembalian', [AdminPeminjamanController::class, 'pengembalian'])->name('pengembalian');
-    Route::post('/peminjaman/{id}/return-approve', [AdminPeminjamanController::class, 'approveReturn']);
-    Route::post('/peminjaman/{id}/return-reject', [AdminPeminjamanController::class, 'rejectReturn']);
+    Route::post('/peminjaman/{id}/return-approve', [AdminPeminjamanController::class, 'approveReturn'])->name('peminjaman.return-approve');
+    Route::post('/peminjaman/{id}/return-reject', [AdminPeminjamanController::class, 'rejectReturn'])->name('peminjaman.return-reject');
+
+    // Riwayat
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
+
+    Route::get('/log-aktivitas', [LogController::class, 'index'])->name('log_aktivitas')->middleware('auth');
+
+    Route::get('/laporan/peminjaman/pdf', [AdminPeminjamanController::class, 'exportPdf'])->name('laporan.pdf');
+});
+
+// GROUP PETUGAS
+Route::middleware('auth')->prefix('petugas')->name('petugas.')->group(function () {
+    // Dashboard
+    Route::get('/', [DashboardAdminController::class, 'index'])->name('dashboard');
+    
+    // Alat
+    Route::get('/alat-tersedia', [AlatController::class, 'index'])->name('alat-tersedia');
+    Route::post('/alat-tersedia', [AlatController::class, 'store'])->name('alat.store');
+    Route::get('/alat-tersedia/{id}/edit', [AlatController::class, 'edit'])->name('alat.edit');
+    Route::put('/alat-tersedia/{id}', [AlatController::class, 'update'])->name('alat.update');
+    Route::delete('/alat-tersedia/{id}', [AlatController::class, 'destroy'])->name('alat.destroy');
+
+    // Pesanan
+    Route::get('/data-pesanan', [AdminPeminjamanController::class, 'index'])->name('data-pesanan');
+
+    // Pesanan
+    
+    // User
+    Route::get('/data-user', [UserController::class, 'index'])->name('data-user');
+    Route::post('/data-user/store', [UserController::class, 'store'])->name('data-user.store');
+    Route::delete('/data-user/{id}', [UserController::class, 'destroy'])->name('data-user.destroy');
+
+    // Kategori
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+
+    // Pinjam
+    Route::get('/peminjaman', [AdminPeminjamanController::class, 'index'])->name('peminjaman');
+    Route::post('/peminjaman/{id}/approve', [AdminPeminjamanController::class, 'approve'])->name('peminjaman.approve');
+    Route::post('/peminjaman/{id}/reject', [AdminPeminjamanController::class, 'reject'])->name('peminjaman.reject');
+
+    Route::get('/pengembalian', [AdminPeminjamanController::class, 'pengembalian'])->name('pengembalian');
+    Route::post('/peminjaman/{id}/return-approve', [AdminPeminjamanController::class, 'approveReturn'])->name('peminjaman.return-approve');
+    Route::post('/peminjaman/{id}/return-reject', [AdminPeminjamanController::class, 'rejectReturn'])->name('peminjaman.return-reject');
 
     // Riwayat
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
@@ -81,6 +128,7 @@ Route::middleware('auth')->prefix('peminjam')->name('peminjam.')->group(function
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 
     Route::post('/checkout', [PeminjamController::class, 'checkout'])
     ->name('checkout');

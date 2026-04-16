@@ -1,5 +1,8 @@
 <x-navbar-sidebar-layout>
 
+    <x-notif-success></x-notif-success>
+    <x-notif-error></x-notif-error>
+
 <h4>Data Pengembalian</h4>
 
 <table class="table">
@@ -28,7 +31,7 @@
 
             {{-- STATUS --}}
             <td>
-                @if($item->status_pengembalian == 'belum')
+                @if($item->status_pengembalian == 'diajukan')
                     <span class="badge bg-warning">Menunggu</span>
 
                 @elseif($item->status_pengembalian == 'dikembalikan')
@@ -44,14 +47,24 @@
 
             {{-- AKSI --}}
             <td>
-                @if($item->status_pengembalian == 'belum')
-                    <button onclick="approveReturn({{ $item->id }})" class="btn btn-success btn-sm">
-                        Terima
-                    </button>
+                @if($item->status_pengembalian == 'diajukan')
 
-                    <button onclick="rejectReturn({{ $item->id }})" class="btn btn-danger btn-sm">
-                        Tolak
-                    </button>
+                    {{-- TERIMA --}}
+                    <form action="{{ route('admin.peminjaman.return-approve', $item->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-success btn-sm">
+                            Terima
+                        </button>
+                    </form>
+
+                    {{-- TOLAK --}}
+                    <form action="{{ route('admin.peminjaman.return-reject', $item->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Tolak
+                        </button>
+                    </form>
+
                 @else
                     <span class="text-muted">-</span>
                 @endif
@@ -63,7 +76,7 @@
 </table>
 
 {{-- JS HARUS DI SINI --}}
-<script>
+{{-- <script>
 function approveReturn(id) {
     fetch(`/admin/peminjaman/${id}/return-approve`, {
         method: 'POST',
@@ -71,7 +84,7 @@ function approveReturn(id) {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
             'Accept': 'application/json'
         }
-    }).then(() => location.reload());
+    }).then((res) => console.log(res));
 }
 
 function rejectReturn(id) {
@@ -83,6 +96,6 @@ function rejectReturn(id) {
         }
     }).then(() => location.reload());
 }
-</script>
+</script> --}}
 
 </x-navbar-sidebar-layout>

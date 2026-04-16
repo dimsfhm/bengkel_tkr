@@ -11,6 +11,7 @@
                 <th>Jatuh Tempo</th>
                 <th>Status</th>
                 <th>Detail Alat</th>
+                <th>Denda</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -27,6 +28,7 @@
 
                 {{-- Jatuh Tempo --}}
                 <td>{{ $p->tanggal_jatuh_tempo }}</td>
+
 
                 {{-- STATUS --}}
                 <td>
@@ -52,31 +54,54 @@
                     @endforelse
                 </td>
 
-                {{-- AKSI PENGEMBALIAN --}}
                 <td>
-    @if($p->status == 'disetujui' && $p->status_pengembalian == 'belum' && $p->tanggal_kembali == null)
+    @php
+        $hariTerlambat = 0;
 
-        <form method="POST" action="/peminjam/pengembalian/{{ $p->id }}">
-            @csrf
-            <button class="btn btn-primary btn-sm">
-                Ajukan Pengembalian
-            </button>
-        </form>
+        if ($p->tanggal_kembali) {
+            if ($p->tanggal_kembali > $p->tanggal_jatuh_tempo) {
+                $hariTerlambat = \Carbon\Carbon::parse($p->tanggal_jatuh_tempo)
+                    ->diffInDays(\Carbon\Carbon::parse($p->tanggal_kembali));
+            }
+        }
+    @endphp
 
-    @elseif($p->status_pengembalian == 'belum')
-
-        <span class="badge bg-info">Menunggu verifikasi</span>
-
-    @elseif($p->status_pengembalian == 'dikembalikan')
-
-        <span class="badge bg-success">Sudah dikembalikan</span>
-
-    @elseif($p->status_pengembalian == 'rusak')
-
-        <span class="badge bg-danger">Ditolak / Rusak</span>
-
+    @if($hariTerlambat > 0)
+        <span class="text-danger">
+            Rp {{ number_format($hariTerlambat * 10000, 0, ',', '.') }}
+        </span>
+    @else
+        -
     @endif
 </td>
+
+                {{-- AKSI PENGEMBALIAN --}}
+                    <td>
+        @if($p->status == 'disetujui' && $p->status_pengembalian == 'belum' && $p->tanggal_kembali == null)
+
+            <form method="POST" action="/peminjam/pengembalian/{{ $p->id }}">
+                @csrf
+                <button class="btn btn-primary btn-sm">
+                    Ajukan Pengembalian
+                </button>
+            </form>
+
+        @elseif($p->status_pengembalian == 'diajukan')
+
+            <span class="badge bg-info">Menunggu verifikasi</span>
+
+        @elseif($p->status_pengembalian == 'dikembalikan')
+
+            <span class="badge bg-success">Sudah dikembalikan</span>
+
+        @elseif($p->status_pengembalian == 'rusak')
+
+            <span class="badge bg-danger">Ditolak / Rusak</span>
+
+        @endif
+</td>
+
+
 
             </tr>
             @endforeach

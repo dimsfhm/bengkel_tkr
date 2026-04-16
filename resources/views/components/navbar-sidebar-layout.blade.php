@@ -70,13 +70,15 @@
                     <x-navlink href="{{ $route_name. 'data-user' }}">Data User</x-navlink>
                     <x-navlink href="{{ $route_name. 'kategori.index' }}">add kategori</x-navlink>
                     <x-navlink href="{{ $route_name. 'pengembalian' }}">Pengembalian</x-navlink>
-                    <x-navlink href="{{ $route_name. 'laporan.pdf' }}">Laporan</x-navlink>
+                    <x-navlink href="{{ $route_name. 'log_aktivitas' }}">Aktivitas</x-navlink>
                     
-                @endif
+                    @endif
                     
-                {{-- petugas aja --}}
+                    {{-- petugas aja --}}
                 @if (auth()->user()->role === 'petugas')
                     <x-navlink href="{{ $route_name. 'data-pesanan' }}">Data Pesanan</x-navlink>
+                    <x-navlink href="{{ $route_name. 'pengembalian' }}">Pengembalian</x-navlink>
+                    <x-navlink href="{{ $route_name. 'laporan.pdf' }}">Laporan</x-navlink>
                 
                 @endif
 

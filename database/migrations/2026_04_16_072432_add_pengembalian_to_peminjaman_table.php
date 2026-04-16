@@ -12,7 +12,7 @@ return new class extends Migration
 
             // STATUS PENGEMBALIAN
             if (!Schema::hasColumn('peminjaman', 'status_pengembalian')) {
-                $table->enum('status_pengembalian', ['belum', 'dikembalikan', 'terlambat', 'rusak'])
+                $table->enum('status_pengembalian', ['belum', 'dikembalikan', 'terlambat', 'rusak', 'diajukan'])
                     ->default('belum')
                     ->after('status');
             }

@@ -1,60 +1,115 @@
 <x-navbar-sidebar-layout>
-<h2>Keranjang</h2>
+<div class="container py-4">
 
-@if(session('success'))
-    <div>{{ session('success') }}</div>
-@endif
+    <h3 class="mb-4 fw-bold">🛒 Keranjang</h3>
 
-@if(session('error'))
-    <div>{{ session('error') }}</div>
-@endif
+    {{-- NOTIF --}}
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-@if(count($cart) > 0)
-    <table border="1" cellpadding="10">
-        <tr>
-            <th>Gambar</th>
-            <th>Nama</th>
-            <th>Harga</th>
-            <th>Jumlah</th>
-            <th>Total</th>
-            <th>Aksi</th>
-        </tr>
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
-        @php $total = 0; @endphp
+    @if(count($cart) > 0)
 
-        @foreach($cart as $id => $item)
-        @php 
-                $harga = $item['harga'] ?? 0;
-            $qty = $item['quantity'] ?? 0;
-            $subtotal = $harga * $qty;
-            $total += $subtotal;
-        @endphp
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
 
-        <tr>
-            <td>
-                @if(!empty($item['gambar']))
-    <img src="{{ asset('storage/' . $item['gambar']) }}" width="60">
-@else
-    <span>No image</span>
-@endif
-            </td>
-            <td>{{ $item['nama'] }}</td>
-            <td>Rp {{ number_format($item['harga']) }}</td>
-            <td>{{ $item['quantity'] }}</td>
-            <td>Rp {{ number_format($subtotal) }}</td>
-            <td>
-                <a href="{{ route('peminjam.cart.remove', $id) }}">Hapus</a>
-            </td>
-        </tr>
-        @endforeach
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
 
-        <tr>
-            <td colspan="4"><strong>Total</strong></td>
-            <td colspan="2"><strong>Rp {{ number_format($total) }}</strong></td>
-        </tr>
-    </table>
-@else
-    <p>Keranjang kosong</p>
-@endif
+                    <thead class="table-light">
+                        <tr>
+                            <th>Produk</th>
+                            <th>Harga</th>
+                            <th>Jumlah</th>
+                            <th>Total</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
 
+                    <tbody>
+                        @php $total = 0; @endphp
+
+                        @foreach($cart as $id => $item)
+                        @php 
+                            $harga = $item['harga'] ?? 0;
+                            $qty = $item['quantity'] ?? 0;
+                            $subtotal = $harga * $qty;
+                            $total += $subtotal;
+                        @endphp
+
+                        <tr>
+                            {{-- PRODUK --}}
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    @if(!empty($item['gambar']))
+                                        <img src="{{ asset('storage/' . $item['gambar']) }}" 
+                                             width="60" height="60"
+                                             style="object-fit:cover; border-radius:8px;">
+                                    @else
+                                        <div class="bg-light d-flex align-items-center justify-content-center"
+                                             style="width:60px;height:60px;border-radius:8px;">
+                                            <small>No Img</small>
+                                        </div>
+                                    @endif
+
+                                    <div>
+                                        <div class="fw-semibold">{{ $item['nama'] }}</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            {{-- HARGA --}}
+                            <td>Rp {{ number_format($harga,0,',','.') }}</td>
+
+                            {{-- JUMLAH --}}
+                            <td>
+                                <span class="badge bg-secondary">
+                                    {{ $qty }}
+                                </span>
+                            </td>
+
+                            {{-- TOTAL --}}
+                            <td class="fw-semibold">
+                                Rp {{ number_format($subtotal,0,',','.') }}
+                            </td>
+
+                            {{-- AKSI --}}
+                            {{-- AKSI --}}
+<td class="text-center">
+    <form action="{{ route('peminjam.cart.remove', $id) }}" method="POST" style="display:inline;">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-outline-danger">
+            Hapus
+        </button>
+    </form>
+</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+        {{-- FOOTER TOTAL --}}
+        <div class="card-footer d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Total</h5>
+            <h4 class="mb-0 text-primary fw-bold">
+                Rp {{ number_format($total,0,',','.') }}
+            </h4>
+        </div>
+    </div>
+
+    @else
+        <div class="alert alert-info text-center">
+            Keranjang kosong 💤
+        </div>
+    @endif
+
+</div>
 </x-navbar-sidebar-layout>

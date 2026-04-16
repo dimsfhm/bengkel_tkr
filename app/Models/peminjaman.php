@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Peminjaman extends Model
 {
-    protected $table = 'peminjaman';
-    protected $fillable = ['user_id', 'petugas_id', 'alat_id','jumlah', 'tanggal_pinjam', 'tanggal_jatuh_tempo', 'tanggal_kembali', 'status'];
+    protected $table = 'peminjaman', $guarded = [];
 
     public function user()
     {

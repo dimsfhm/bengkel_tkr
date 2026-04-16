@@ -1,50 +1,70 @@
 <x-navbar-sidebar-layout>
-    <div class="p-6">
-
-    {{-- Title --}}
-    <h2 class="text-2xl font-semibold mb-6">Dashboard</h2>
-
-    {{-- Cards --}}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-
-        {{-- Riwayat --}}
-        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-blue-500">
-            <p class="text-sm text-gray-500">Riwayat Pesanan</p>
-            <h3 class="text-2xl font-bold">0 Riwayat</h3>
+    <div class="container-fluid p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2 border-secondary">
+            <h3 class="mb-4">Dashboard</h3>
         </div>
+        <!-- Stats -->
+        <div class="row g-3 mb-4">
 
-        {{-- Alat --}}
-        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-green-500">
-            <p class="text-sm text-gray-500">Alat tersedia</p>
-            <h3 class="text-2xl font-bold">0 Tersedia</h3>
-        </div>
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm border-left-primary">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-primary">Peminjaman</small>
+                            <h4 class="mb-0 fw-bold">{{ $peminjaman->count() }} Pesanan</h4>
+                        </div>
+                        <i class="bi bi-receipt fs-2 text-secondary"></i>
+                    </div>
+                </div>
+            </div>
 
-        {{-- Keranjang --}}
-        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-red-500">
-            <p class="text-sm text-gray-500">Keranjang</p>
-            <h3 class="text-2xl font-bold">0 Produk</h3>
-        </div>
-
-    </div>
-
-    {{-- Table --}}
-    <div class="bg-white rounded-xl shadow p-5">
-        <h3 class="text-lg font-semibold mb-4">Peminjaman Terbaru</h3>
-
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm text-gray-600">
-                <thead>
-                    <tr class="border-b text-gray-500">
-                        <th class="p-3 text-left">Produk</th>
-                        <th class="p-3 text-left">Status</th>
-                        <th class="p-3 text-left">Tipe</th>
-                        <th class="p-3 text-left">Kode Pesanan</th>
-                        <th class="p-3 text-left">Harga</th>
-                    </tr>
+                <div class="col-md-4">
+                    <div class="card stat-card shadow-sm border-left-success">
+                        <div class="card-body d-flex justify-content-between align-items-">
+                            <div>
+                                <small class="text-success">List Alat</small>
+                                <h4 class="mb-0 fw-bold">{{ $total_alat }} Alat</h4>
+                            </div>
+                            <i class="bi bi-briefcase fs-2 text-secondary"></i>
+                        </div>
+                    </div>
+                </div>
                 
-            </table>
-        </div>
-    </div>
+                <div class="col-md-4">
+                    <div class="card stat-card shadow-sm border-left-danger">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-danger">Keranjang</small>
+                                <h4 class="mb-0 fw-bold">{{ $total_petugas }} Alat</h4>
+                            </div>
+                            <i class="bi bi-cart4 fs-4 text-secondary"></i>
+                        </div>
+                    </div>
+                </div>
 
-</div>
+        </div>
+
+        <!-- Table -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h5 class="mb-3">Peminjaman Terbaru</h5>
+
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Produk</th>
+                                <th>Status</th>
+                                <th>Tipe</th>
+                                <th>Kode Pesanan</th>
+                                <th>Harga</th>
+                            </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </x-navbar-sidebar-layout>

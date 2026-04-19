@@ -1,14 +1,15 @@
-?<?php
+<?php
 
-use App\Models\log_aktivitas;
+use App\Models\LogAktivitas;
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('logAktivitas')) {
     function logAktivitas($aksi, $deskripsi = null, $data = [])
-    {
-        if (!Auth::check()) return;
+{
+    if (!Auth::check()) return;
 
-        log_aktivitas::create([
+    try {
+        LogAktivitas::create([
             'user_id' => Auth::id(),
             'role' => Auth::user()->role,
             'aktivitas' => json_encode([
@@ -17,5 +18,8 @@ if (!function_exists('logAktivitas')) {
                 'data' => $data
             ])
         ]);
+    } catch (\Exception $e) {
+        dd($e->getMessage());
     }
+}
 }

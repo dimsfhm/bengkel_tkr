@@ -158,7 +158,7 @@ class PeminjamanController extends Controller
     {
         $data = Peminjaman::with('user','alat')->get();
 
-        $pdf = Pdf::loadView('admin.laporan_pdf', compact('data'));
+        $pdf = PDF::loadView('admin.laporan_pdf', compact('data'));
 
         return $pdf->download('laporan-peminjaman.pdf');
     }

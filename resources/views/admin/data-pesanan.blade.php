@@ -63,7 +63,7 @@
                                         Reject
                                     </button>
                                 @else
-                                    <span class="text-muted">Selesai</span>
+                                    <span class="text-muted">Dipinjam</span>
                                 @endif
                             </td>
                         </tr>

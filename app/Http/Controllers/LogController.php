@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\log_aktivitas;
+use App\Models\LogAktivitas;
 
 class LogController extends Controller
 {
     public function index()
     {
-        $logs = log_aktivitas::with('user')
+        $logs = LogAktivitas::with('user')
             ->latest()
             ->paginate(10);
 

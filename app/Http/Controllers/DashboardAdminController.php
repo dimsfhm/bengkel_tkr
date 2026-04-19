@@ -6,7 +6,7 @@ use App\Models\alat;
 use App\Models\peminjaman;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DashboardAdminController extends Controller
 {
@@ -16,13 +16,15 @@ class DashboardAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() 
-    {
-        $peminjaman = peminjaman::get(); // Consider using pagination or with() for eager loading
-        $total_alat = alat::count();
-        $total_petugas = User::where('role', 'petugas')->count(); // or 'admin' if you prefer
-        
-        return view('admin.dashboard', compact('peminjaman', 'total_alat', 'total_petugas'));
-    }
+{
+    $peminjaman = peminjaman::get();
+    $total_alat = alat::count();
+    $total_petugas = User::where('role', 'petugas')->count();
+
+    return view('admin.dashboard', compact('peminjaman', 'total_alat', 'total_petugas'));
+}
+
+    
     /**
      * Show the form for creating a new resource.
      *

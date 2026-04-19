@@ -45,6 +45,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/data-user', [UserController::class, 'index'])->name('data-user');
     Route::post('/data-user/store', [UserController::class, 'store'])->name('data-user.store');
     Route::delete('/data-user/{id}', [UserController::class, 'destroy'])->name('data-user.destroy');
+    Route::get('/data-user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/data-user/{id}', [UserController::class, 'update'])->name('user.update');
 
     // Kategori
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
@@ -142,6 +144,17 @@ Route::middleware('auth')->prefix('peminjam')->name('peminjam.')->group(function
     Route::get('/reset-cart', function () {
     session()->forget('cart');
     return "cart cleared";
+});
+
+Route::middleware(['auth'])->prefix('peminjam')->name('peminjam.')->group(function () {
+
+    Route::post('/checkout', [PeminjamController::class, 'checkout'])
+        ->name('checkout')
+        ->middleware('log.aktivitas');
+
+    Route::post('/pengembalian/{id}', [PeminjamController::class, 'ajukanPengembalian'])
+        ->name('pengembalian')
+        ->middleware('log.aktivitas');
 });
 
 });

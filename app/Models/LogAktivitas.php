@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
-class log_aktivitas extends Model
+class LogAktivitas extends Model
 {
-     protected $table = 'log_aktivitas';
+    protected $table = 'log_aktivitas';
 
     protected $fillable = [
         'user_id',

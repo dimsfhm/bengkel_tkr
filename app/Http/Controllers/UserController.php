@@ -20,7 +20,7 @@ class UserController extends Controller
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role'     => 'required|in:users,petugas,admin', // sesuaikan dengan role yang ada
+            'role'     => 'required|in:user,petugas,admin', // sesuaikan dengan role yang ada
         ]);
 
         User::create([
@@ -46,6 +46,37 @@ public function destroy($id)
     $user->delete();
 
     return redirect()->route('admin.data-user')->with('success', 'User berhasil dihapus.');
+}
+
+    //Update
+   public function edit($id)
+{
+    return redirect()->route('admin.data-user');
+}
+
+public function update(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+
+    $request->validate([
+        'name'  => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'role'  => 'required|in:user,petugas,admin',
+        'password' => 'nullable|min:6',
+    ]);
+
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->role = $request->role;
+
+    // hanya update password kalau diisi
+    if ($request->password) {
+        $user->password = Hash::make($request->password);
+    }
+
+    $user->save();
+
+    return redirect()->route('admin.data-user')->with('success', 'User berhasil diupdate.');
 }
 }
 

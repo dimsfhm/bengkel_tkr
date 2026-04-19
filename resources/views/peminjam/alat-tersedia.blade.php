@@ -81,7 +81,7 @@
                     <label>Metode</label>
                     <select name="metode_pembayaran" class="form-control" required>
                         <option value="">-- Pilih --</option>
-                        <option value="cod">COD</option>
+                        <option value="cod">Bayar Ditempat (COD)</option>
                     </select>
                 </div>
 

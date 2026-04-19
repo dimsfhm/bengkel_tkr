@@ -18,29 +18,31 @@
                 </div>
             </div>
 
-                <div class="col-md-4">
-                    <div class="card stat-card shadow-sm border-left-success">
-                        <div class="card-body d-flex justify-content-between align-items-">
-                            <div>
-                                <small class="text-success">List Alat</small>
-                                <h4 class="mb-0 fw-bold">{{ $total_alat }} Alat</h4>
-                            </div>
-                            <i class="bi bi-briefcase fs-2 text-secondary"></i>
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm border-left-success">
+                    <div class="card-body d-flex justify-content-between align-items-">
+                        <div>
+                            <small class="text-success">List Alat</small>
+                            <h4 class="mb-0 fw-bold">{{ $total_alat }} Alat</h4>
                         </div>
+                        <i class="bi bi-briefcase fs-2 text-secondary"></i>
                     </div>
                 </div>
-                
-                <div class="col-md-4">
-                    <div class="card stat-card shadow-sm border-left-danger">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <small class="text-danger">Keranjang</small>
-                                <h4 class="mb-0 fw-bold">{{ $total_petugas }} Alat</h4>
-                            </div>
-                            <i class="bi bi-cart4 fs-4 text-secondary"></i>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm border-left-danger">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-danger">Keranjang</small>
+                            <h4 class="mb-0 fw-bold">
+                                {{ count(session()->get('cart', [])) }} Keranjang
+                            </h4>
                         </div>
+                        <i class="bi bi-cart4 fs-4 text-secondary"></i>
                     </div>
                 </div>
+            </div>
 
         </div>
 
